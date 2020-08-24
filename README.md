@@ -47,5 +47,9 @@ UI interface for the key editing
 
 
 
+now we still use Registry.exe from labrad (ucsb) as a temporal solution
+
+
+
 
 

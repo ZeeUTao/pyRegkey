@@ -8,8 +8,8 @@ import os,json
 
 
 # dict to files (keys)
-dict_example = {'f10': 5.623, 'type': 'transmon', 'xlist': [0.8, 1.2, 1.5]}
-folder = 'example_keys'
+dict_example = {'f10': 5.6883, 'type': 'transmon1', 'xlist': [0.8, 1.2, 1.5]}
+folder = r'Registry\example_keys.dir'
 
 for (k,v) in  dict_example.items():
     path_save = os.path.join(folder,k+'.key')
@@ -93,7 +93,7 @@ class AttrDict(dict):
         return d
 
 
-folder = r'example_keys'
+folder = r'Registry\example_keys.dir'
 q1 = AttrDict(key2dict(folder))
 
 

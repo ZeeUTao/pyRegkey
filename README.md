@@ -18,6 +18,17 @@ Here, we can get three files *f10.key, type.key, xlist.key*, where the contents 
 
 
 
+We can use it as following
+
+```python
+print(paras.f10)
+# 5.623
+## or as traditional dict
+print(paras['f10'])
+```
+
+
+
 ### types
 
 - float

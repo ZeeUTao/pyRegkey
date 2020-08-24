@@ -27,6 +27,15 @@ print(paras.f10)
 print(paras['f10'])
 ```
 
+and change them according to *write_access* is True or False
+
+```python
+paras.f10 = 5.6 
+# then the content of the file "f10.key" becomes 5.6
+```
+
+
+
 
 
 ### types

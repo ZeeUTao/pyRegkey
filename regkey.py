@@ -29,7 +29,7 @@ def key2dict(folder,key=0,value=1):
     for f in f_list:
         keys.append(os.path.splitext(f)[0])
         f_open = open(os.path.join(folder,f))
-        value0 = f_open.read().strip()
+        value0 = f_open.read().strip().replace("'", '"')
         f_open.close()
         # transfer from .str to appropriate type
         value = json.loads(value0)

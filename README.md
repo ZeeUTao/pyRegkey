@@ -18,6 +18,16 @@ Here, we can get three files *f10.key, type.key, xlist.key*, where the contents 
 
 
 
+### types
+
+- float
+- string
+- list
+
+are supported 
+
+
+
 
 
 ## TODO

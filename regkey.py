@@ -166,6 +166,9 @@ class RegistryWrapper(object):
         object.__setattr__(d, '__name__', self._dir[-1])
         for name in dirs:
             d[name] = self._subdir(name).copy()
+        if len(keys):
+            for name in keys:
+                d[name] = self[name]
         return d
         
         
@@ -177,11 +180,12 @@ def loadQubits(user,write_access=False):
     if write_access:
         return Qubits
     else:
-        return qubit
+        return Qubits.copy()
     
 user = 'peach'
 
-q = loadQubits(user,write_access=True)
+q = loadQubits(user,write_access=False)
+Q = loadQubits(user,write_access=True)
 
 # q.f10 = 5.88
 

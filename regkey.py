@@ -6,7 +6,10 @@
 
 import os,json
 from functools import reduce
+import re
 
+from util.units import Unit,Value
+V, mV, us, ns, GHz, MHz, dBm, rad = [Unit(s) for s in ('V', 'mV', 'us', 'ns', 'GHz', 'MHz', 'dBm', 'rad')]
 
 """
 dict_example = {'f10': 5.628, 'type': 'transmon', 'xlist': [0.8, 1.2, 1.5]}
@@ -26,7 +29,47 @@ for (k,v) in  dict_example.items():
 # files (keys) to dict
 
 
+def MatchString(string):
+    # We do not use a strict Match
+    # Assuming the parameters you saved is not so weird
+    
+    string_new = None
+    
+    # num is float or int
+    typeNamespace = ['int','float','str','list']
+    patterns = []
+    patterns.append('^\-?[0-9]+$')
+    patterns.append('^\-?[0-9]+(\.[0-9]*)?$')
+    patterns.append('^".*"$')
+    patterns.append('^\[.*\]$')
 
+    patternDict = dict(zip(typeNamespace,patterns))
+    
+    for i,typeName in enumerate(typeNamespace):
+        matchObj = re.match(patternDict[typeName],string)
+        if matchObj is not None:
+            string_new = json.loads(matchObj.group())
+            return string_new
+    # If matched, end the function
+    
+    # elif withUnits
+    matchObj = re.match('^\-?[0-9]+(\.[0-9]*)?\s[A-Za-z]*$',string)
+    
+    unitSpace = ('V', 'mV', 'us', 'ns', 'GHz', 'MHz', 'dBm', 'rad')
+    if matchObj is not None:
+        num,unit = matchObj.group().split(' ')
+        num = json.loads(num)
+        if unit in unitSpace:
+            string_new = Value(num,unit)
+            return string_new
+    
+    # If the type is wrong, or not considered
+    if string_new == None:
+        print('Registry Type error, use default value')
+        print(string)
+    return string_new
+    
+    
 class AttrDict(dict):
     """A dict whose entries can also be accessed as attributes.
     
@@ -126,8 +169,9 @@ class RegistryWrapper(object):
         f_open = open(os.path.join(self._path,key+'.key'))
         value0 = f_open.read().strip().replace("'", '"')
         f_open.close()
-        # transfer from .str to appropriate type
-        value = json.loads(value0)
+                
+        # transfer from .str to float/string/list...
+        value = MatchString(value0)
         return value
     
     ## dict interface
@@ -189,8 +233,8 @@ def loadQubits(write_access=False):
     
     
     Qubits = [sample[q] for q in sample['config']]
-    sample = sample.copy()
-    qubits = [sample[q] for q in sample['config']]
+    sample_copy = sample.copy()
+    qubits = [sample_copy[q] for q in sample_copy['config']]
     
     # only return original qubit objects if requested
     if write_access:

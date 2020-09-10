@@ -172,22 +172,35 @@ class RegistryWrapper(object):
         return d
         
         
-def loadQubits(user,write_access=False):
-    userPath = r'Registry'
-    reg = RegistryWrapper(userPath)
-    Qubits = reg[user]
-    qubit = Qubits.copy()
-    if write_access:
-        return Qubits
-    else:
-        return Qubits.copy()
+def loadQubits(write_access=False):
+    """Get local copies of the sample configuration stored in the registry.
     
-user = 'peach'
+    Returns the local sample config, and also extracts the individual
+    qubit configurations, as specified by the sample['config'] list.  If
+    write_access is True, also returns the qubit registry wrappers themselves,
+    so that updates can be saved back into the registry.
+    """
+    
+    userPath = r'Registry'
+    user = 'Ziyu'
+    reg = RegistryWrapper(userPath)
+    reg = reg[user]
+    sample = reg[reg['sample'][0]]
+    
+    
+    Qubits = [sample[q] for q in sample['config']]
+    sample = sample.copy()
+    qubits = [sample[q] for q in sample['config']]
+    
+    # only return original qubit objects if requested
+    if write_access:
+        return sample, qubits, Qubits
+    else:
+        return sample, qubits
+    
 
-q = loadQubits(user,write_access=False)
-Q = loadQubits(user,write_access=True)
 
-# q.f10 = 5.88
+# sample, qubits = loadQubits(write_access=False)
 
 
 

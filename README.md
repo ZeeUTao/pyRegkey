@@ -1,12 +1,12 @@
 # pyRegkey
-python script for save and load `{key:value}` data with customized units (optional)
+A simple python script for save and load `{key:value}` data via text file, with customized units (optional)
 
 
 
 
 ## Introduction
 
-This codes provide the inter-conversion of dictionary (`.dict`) and a series of file with specific extension (e.g. `.key`). 
+This codes provide the inter-conversion of dictionary (`.dict`) and a series of text file with specific extension (e.g. `.key`). 
 
 For example, a python dictionary for the experimental parameters, 
 

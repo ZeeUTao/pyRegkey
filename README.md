@@ -18,7 +18,30 @@ Here, we can get individual files `num.key`, `f10.key`, `type.key`, `xlist.key`,
 
 
 
+
 ## Property
+
+### sub-directory
+
+You can access the sub-directory via  `folder['sub_folder']['sub_sub_folder']`  or `folder.sub_folder.sub_sub_folder`, to change any key in the main `Registry` folder. 
+
+```python
+folder.sub_folder.sub_sub_folder.key0 = value0
+# or
+folder['sub_folder']['sub_sub_folder']['key0'] = value0
+```
+
+
+
+We usually have a structure `Registry\\User.dir\\20XXXXSample.dir\\q1.dir` , and use
+
+ `sample, qubits = loadQubits(write_access=False)`. 
+
+Specially, `sample['q1'].f10 = 5.414*GHz` will change the original `.key`, `qubits` is a copy and `qubits[0]=5.414*GHz` will not change the saved file. 
+
+
+
+
 
 ### basic types
 
@@ -49,6 +72,26 @@ Transformation of the usual units are supported, for example,
 Combined type is also okay
 
 `"""[1.2 ns, 1.3 ns]""" `  in the saved file `.key`  --> `[Value(1.2,'ns'),Value(1.3,'ns')]` in the extracted `.dict`
+
+
+
+### write_access
+
+You can change the value in `RegistryWrapper()` as `paras.f10 = 5.414*GHz` , then the original file is also changed. 
+
+If you do not want to change the original file, you can use a copy of `paras`. 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

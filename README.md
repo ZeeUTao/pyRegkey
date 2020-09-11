@@ -1,12 +1,12 @@
 # pyRegkey
-A simple python script for save and load `{key:value}` data via text file, with customized units (optional)
+python script for save and load `{key:value}` data with customized units
 
 
 
 
 ## Introduction
 
-This codes provide the inter-conversion of dictionary (`.dict`) and a series of text file with specific extension (e.g. `.key`). 
+This codes provide the inter-conversion of dictionary (`.dict`) and a series of file with specific extension (e.g. `.key`). 
 
 For example, a python dictionary for the experimental parameters, 
 
@@ -20,14 +20,9 @@ Here, we can get individual files `num.key`, `f10.key`, `type.key`, `xlist.key`,
 
 ## Property
 
-### Types
+### basic types
 
-- float/int
-- string
-- list
-- float/int + units
-
-are supported 
+All the types in python expression are supported 
 
 ```python
 # float/int
@@ -38,11 +33,9 @@ are supported
 
 # list
 [1.14,5.14,1.5,1.5] 
+[('xy','12','13'),('z','12','13')]
 
-# float/int + units
-11.4514*GHz, Value(11.4514,'GHz') 
-
-
+# ...
 ```
 
 ### Unit
@@ -53,17 +46,9 @@ Transformation of the usual units are supported, for example,
 
 `Value(11.4514,'GHz')['MHz']=11451.4 `
 
+Combined type is also okay
 
-
-## Getting started
-
-`run regkey` and enter 
-
-```python
-sample, qubits = loadQubits(write_access=False)
-```
-
-The data in `\\Registry\\` is given for test. 
+`"""[1.2 ns, 1.3 ns]""" `  in the saved file `.key`  --> `[Value(1.2,'ns'),Value(1.3,'ns')]` in the extracted `.dict`
 
 
 

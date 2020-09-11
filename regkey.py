@@ -26,47 +26,41 @@ for (k,v) in  dict_example.items():
     f.close()
     """
 
-# files (keys) to dict
-
 
 def MatchString(string):
-    # We do not use a strict Match
-    # Assuming the parameters you saved is not so weird
-    
     string_new = None
     
-    # num is float or int
-    typeNamespace = ['int','float','str','list']
-    patterns = []
-    patterns.append('^\-?[0-9]+$')
-    patterns.append('^\-?[0-9]+(\.[0-9]*)?$')
-    patterns.append('^".*"$')
-    patterns.append('^\[.*\]$')
-
-    patternDict = dict(zip(typeNamespace,patterns))
+    # if the string is in python expression
+    try:
+        eval(string)
+    except:pass
+    else:
+        string_new = eval(string)
+        return string_new
     
-    for i,typeName in enumerate(typeNamespace):
-        matchObj = re.match(patternDict[typeName],string)
-        if matchObj is not None:
-            string_new = json.loads(matchObj.group())
-            return string_new
-    # If matched, end the function
+    # Now, the string is not a python expression
+    # If it has Units
     
-    # elif withUnits
-    matchObj = re.match('^\-?[0-9]+(\.[0-9]*)?\s[A-Za-z]*$',string)
-    
-    unitSpace = ('V', 'mV', 'us', 'ns', 'GHz', 'MHz', 'dBm', 'rad')
-    if matchObj is not None:
-        num,unit = matchObj.group().split(' ')
-        num = json.loads(num)
-        if unit in unitSpace:
-            string_new = Value(num,unit)
-            return string_new
-    
-    # If the type is wrong, or not considered
+    def space_repl(matchobj):
+        g0 = matchobj.group()
+        unitSpace = ('V', 'mV', 'us', 'ns', 'GHz', 'MHz', 'dBm', 'rad')
+        if any([u in g0 for u in unitSpace]) and g0 is not None:
+            return g0.replace(' ','*')
+        else:
+            return g0
+    try:
+        string1 = re.sub('\-?[0-9]+(\.[0-9]*)?\s[A-Za-z]*', space_repl,string)
+        eval(string1)
+    except:pass
+    else:
+        string1 = re.sub('\-?[0-9]+(\.[0-9]*)?\s[A-Za-z]*', space_repl,string)
+        string_new = eval(string1)
+        return string_new
+        
+    # If the type is not considered, return None
     if string_new == None:
-        print('Registry Type error, use default value')
         print(string)
+        print('Registry Type error, use default value')
     return string_new
     
     

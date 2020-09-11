@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # Copyright (c) 2020, Ziyu Tao
-# All rights reserved.
+
 
 import os,json
 from functools import reduce

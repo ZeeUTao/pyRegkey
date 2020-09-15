@@ -4,27 +4,18 @@
 # Copyright (c) 2020, Ziyu Tao
 
 
-import os,json
+import os
 from functools import reduce
 import re
 
 from util.units import Unit,Value
-V, mV, us, ns, GHz, MHz, dBm, rad = [Unit(s) for s in ('V', 'mV', 'us', 'ns', 'GHz', 'MHz', 'dBm', 'rad')]
+from util.sweeptools import RangeCreator
 
-"""
-dict_example = {'f10': 5.628, 'type': 'transmon', 'xlist': [0.8, 1.2, 1.5]}
-folder = 'Registry\example_keys.dir'
+unitSpace = ('V', 'mV', 'us', 'ns', 'GHz', 'MHz', 'dBm', 'rad')
+V, mV, us, ns, GHz, MHz, dBm, rad = [Unit(s) for s in unitSpace]
 
-for (k,v) in  dict_example.items():
-    path_save = os.path.join(folder,k+'.key')
-    f=open(path_save,"w")
-    if type(v) is str:
-        v_write = "'{0}'".format(v)
-    else:
-        v_write = str(v)
-    f.write(v_write)
-    f.close()
-    """
+ar = RangeCreator()
+
 
 
 def MatchString(string):

@@ -1,5 +1,7 @@
 # pyRegkey
-python script for save and load `{key:value}` data with customized units
+python script for save and load `{key:value}` data with customized units, 
+
+and a data vault for saving experimental data. 
 
 
 
@@ -19,7 +21,9 @@ Here, we can get individual files `num.key`, `f10.key`, `type.key`, `xlist.key`,
 
 
 
-## Property
+## Registry
+
+mainly in `regkey.py`, and import some codes in `util`
 
 ### sub-directory
 
@@ -83,15 +87,42 @@ If you do not want to change the original file, you can use a copy of `paras`.
 
 
 
+## DataVault
 
+mainly in `dataVault.py`, and import some codes in `util`
 
+- Example:
 
+`run dataVault` in ipython
 
+and input
 
+```python
+path = ['XXX','Ziyu','peach']
+ctx = init_context(path)
+dv = DataVault()
 
+import numpy as np
+xs = np.arange(0.,101,1)
+ys = np.sin(0.1*xs)
 
+dv.new(ctx,'Test_x_y22', [('freq', 'value')], [('z','Test-Spectrum','a.u.')])
+dv.add_parameter(ctx,'simu_eq22', ['ys=sin(xs)'])
 
+import time
 
+for i in range(len(xs)):
+    
+    x,y=xs[i],ys[i]
+    print(i)
+    data = [x,y]
+    data = np.asarray(data)
+    
+    dv.add(ctx,data)
+    time.sleep(0.001)
+   
+dv.close(ctx)
+```
 
 
 
@@ -101,7 +132,7 @@ UI interface for the key editing
 
 
 
-now we still use Registry.exe from labrad (ucsb) as a temporal solution
+now we still use Registry.exe, Grapher.exe from labrad (ucsb) as a temporal solution
 
 
 

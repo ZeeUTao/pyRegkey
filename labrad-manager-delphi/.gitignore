@@ -1,0 +1,7 @@
+LabRAD.ini
+*.exe
+*.dcu
+*.ddp
+*.cfg
+*.~*
+
